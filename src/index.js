@@ -50,8 +50,6 @@ app.get('/todos', checksExistsUserAccount, (request, response) => {
 
   const {todos} = users.find((user) => user.username === username);
 
-  console.log(todos);
-
   response.status(200).json({todos});
 });
 

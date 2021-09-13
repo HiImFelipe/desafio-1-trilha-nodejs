@@ -90,7 +90,7 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
     }
   });
 
-  response.status(201).json('Updated successfully');
+  response.status(200).json('Updated successfully');
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {

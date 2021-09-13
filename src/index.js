@@ -113,7 +113,17 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  const {username} = request.headers;
+  const {id} = request.params;
+
+  const userIndex = users.findIndex((user) => user.username === username);
+  const userTodos = users[userIndex].todos;
+
+  userTodos.forEach((todo, index) => {
+    if (todo.id === id) userTodos.splice(index, 1);
+  });
+
+  response.status(200).json({message: 'Todo item removed'});
 });
 
 module.exports = app;

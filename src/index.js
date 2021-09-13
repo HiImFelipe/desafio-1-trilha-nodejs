@@ -82,23 +82,23 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
   const userIndex = users.findIndex((user) => user.username === username);
   const userTodos = users[userIndex].todos;
 
-  let updatedTodo;
-
   userTodos.forEach((todo, index) => {
     if (todo.id === id) {
-      updatedTodo = {
+      const updatedTodo = {
         ...userTodos[index],
         title,
         deadline,
       };
 
       userTodos[index] = {...updatedTodo};
+
+      delete updatedTodo.created_at;
+
+      return response.status(200).json(updatedTodo);
     }
   });
 
-  delete updatedTodo.created_at;
-
-  response.status(200).json(updatedTodo);
+  response.status(404).json({error: 'Todo not found'});
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {

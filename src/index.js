@@ -75,7 +75,24 @@ app.post('/todos', checksExistsUserAccount, (request, response) => {
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  const {title, deadline} = request.body;
+  const {username} = request.headers;
+  const {id} = request.params;
+
+  const userIndex = users.findIndex((user) => user.username === username);
+  const userTodos = users[userIndex].todos;
+
+  userTodos.forEach((todo, index) => {
+    if (todo.id === id) {
+      userTodos[index] = {
+        ...userTodos[index],
+        title,
+        deadline,
+      };
+    }
+  });
+
+  response.status(201).json('Updated successfully');
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {

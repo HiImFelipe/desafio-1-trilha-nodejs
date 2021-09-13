@@ -82,17 +82,23 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
   const userIndex = users.findIndex((user) => user.username === username);
   const userTodos = users[userIndex].todos;
 
+  let updatedTodo;
+
   userTodos.forEach((todo, index) => {
     if (todo.id === id) {
-      userTodos[index] = {
+      updatedTodo = {
         ...userTodos[index],
         title,
         deadline,
       };
+
+      userTodos[index] = {...updatedTodo};
     }
   });
 
-  response.status(200).json({message: 'Updated successfully'});
+  delete updatedTodo.created_at;
+
+  response.status(200).json(updatedTodo);
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {

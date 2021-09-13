@@ -94,7 +94,22 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  const {username} = request.headers;
+  const {id} = request.params;
+
+  const userIndex = users.findIndex((user) => user.username === username);
+  const userTodos = users[userIndex].todos;
+
+  userTodos.forEach((todo, index) => {
+    if (todo.id === id) {
+      userTodos[index] = {
+        ...userTodos[index],
+        done: true,
+      };
+    }
+  });
+
+  response.status(200).json({message: 'Todo marked as done'});
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {

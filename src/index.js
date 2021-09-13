@@ -112,7 +112,7 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
     if (todo.id === id) {
       const updatedTodo = {
         ...userTodos[index],
-        done: true
+        done: true,
       };
 
       userTodos[index] = updatedTodo;

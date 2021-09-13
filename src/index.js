@@ -35,14 +35,16 @@ app.post('/users', (request, response) => {
     });
   }
 
-  users.push({
+  const userObject = {
     id: uuidv4,
     name,
     username,
     todos: [],
-  });
+  };
 
-  response.status(201).json({message: 'User created successfully'});
+  users.push(userObject);
+
+  response.status(201).json(userObject);
 });
 
 app.get('/todos', checksExistsUserAccount, (request, response) => {

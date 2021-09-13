@@ -57,6 +57,7 @@ app.get('/todos', checksExistsUserAccount, (request, response) => {
 
 app.post('/todos', checksExistsUserAccount, (request, response) => {
   const {title, deadline} = request.body;
+  const {username} = request.headers;
 
   const todoObject = {
     id: uuidv4(),
@@ -66,7 +67,9 @@ app.post('/todos', checksExistsUserAccount, (request, response) => {
     created_at: new Date(),
   };
 
-  users.push(todoObject);
+  const userIndex = users.findIndex((user) => user.username === username);
+
+  users[userIndex].todos.push(todoObject);
 
   response.status(201).json(todoObject);
 });

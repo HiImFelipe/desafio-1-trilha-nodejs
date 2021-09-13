@@ -36,7 +36,7 @@ app.post('/users', (request, response) => {
   }
 
   const userObject = {
-    id: uuidv4,
+    id: uuidv4(),
     name,
     username,
     todos: [],

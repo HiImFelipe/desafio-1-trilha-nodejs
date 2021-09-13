@@ -110,14 +110,18 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
 
   userTodos.forEach((todo, index) => {
     if (todo.id === id) {
-      userTodos[index] = {
+      const updatedTodo = {
         ...userTodos[index],
-        done: true,
+        done: true
       };
+
+      userTodos[index] = updatedTodo;
+
+      return response.status(200).json(updatedTodo);
     }
   });
 
-  response.status(200).json({message: 'Todo marked as done'});
+  response.status(404).json({error: 'Todo not found'});
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {

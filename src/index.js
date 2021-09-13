@@ -52,7 +52,7 @@ app.get('/todos', checksExistsUserAccount, (request, response) => {
 
   const {todos} = users.find((user) => user.username === username);
 
-  response.status(200).json({todos});
+  response.status(200).json(todos);
 });
 
 app.post('/todos', checksExistsUserAccount, (request, response) => {
